@@ -18,5 +18,12 @@ export interface console {
         cMessage: string
     }): void;
 
+    /** @description Shows the console window.
+     * @example
+     * //Clear and show the console window:
+     * console.clear();
+     * console.show();
+     */
+    show(): void;
     //#endregion
 }

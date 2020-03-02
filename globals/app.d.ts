@@ -1,15 +1,18 @@
-/* eslint-disable no-unused-vars */
-import { Color } from "./Color";
-import { Dialog } from "./Dialog";
-import { Doc } from "./Doc";
-import { FullScreen } from "./FullScreen";
-import { Monitor } from "./Monitor";
-import { Monitors } from "./Monitors";
-import { PlugIn } from "./PlugIn";
-import { Thermometer } from "./Thermometer";
-import { TreeItem } from "./TreeItem";
-import { IconStream } from "./IconStream";
-/* eslint-enable no-unused-vars */
+import { Color } from "../interfaces/Color";
+import { Dialog } from "../interfaces/Dialog";
+import { Doc } from "../interfaces/Doc";
+import { FullScreen } from "../interfaces/FullScreen";
+import { Monitor } from "../interfaces/Monitor";
+import { Monitors } from "../interfaces/Monitors";
+import { PlugIn } from "../interfaces/PlugIn";
+import { Thermometer } from "../interfaces/Thermometer";
+import { TreeItem } from "../interfaces/TreeItem";
+import { IconStream } from "../interfaces/IconStream";
+import { app_media } from "./app.media";
+import { FDF } from "../interfaces/FDF";
+import { MenuItem } from "../interfaces/MenuItem";
+import { interval } from "../interfaces/interval";
+import { timeout } from "../interfaces/timeout";
 
 declare interface app {
     //#region Properties
@@ -62,7 +65,7 @@ declare interface app {
      */
     readonly constants: {
         align: string;
-    }
+    };
 
     /**
      * @description Turns the focus rectangle on and off. The focus rectangle is the faint dotted line around buttons,
@@ -128,6 +131,8 @@ declare interface app {
      * | SVE    | Swedish              |
      */
     readonly language: string;
+
+    readonly media: app_media;
 
     /** @description A Monitors object, which is an array containing one or more Monitor objects representing each of
      * the display monitors connected to the user’s system. Each access to app.monitors returns a new, up-to-date copy
@@ -240,7 +245,7 @@ declare interface app {
      *    * Business Tools
      *    * Full 
      */
-    readonly viewerVariation: string
+    readonly viewerVariation: string;
 
     /**
      * Indicates the version number of the current viewer application. 
@@ -322,7 +327,7 @@ declare interface app {
          *    inclusive, the new item is inserted as the first item in the menu (rather than at the end of the menu).
          * 
          * bPrepend is useful when the named item is the first item in a group. */
-        bPrepend?: boolean
+        bPrepend?: boolean;
     }): void,
 
     /**
@@ -366,7 +371,7 @@ declare interface app {
          * menu. A menu item introduced into the Tools menu comes in at the top
          * of the menu. nPos is obeyed when nPos is a string referencing another
          * user-defined menu item. */
-        nPos?: number
+        nPos?: number;
     }): void,
 
     /**
@@ -506,14 +511,14 @@ declare interface app {
         /** @description A string that specifies the file system that the file system browser operates on initially. 
          * Two values are supported: "" (the empty string) representing the default file system and “CHTTP”. The
          * default is the default file system. This parameter is only relevant if the web server supports WebDAV. */
-        cFSInit?: string
+        cFSInit?: string;
     }): {
         /** @description A string containing the resulting file system name for the chosen file. */
         cFS: string,
         /** @description A string containing the resulting path for the chosen file. */
         cPath: string,
         /** @description A string containing the resulting URL for the chosen file */
-        cURL: string
+        cURL: string;
     },
 
     /** 
@@ -562,8 +567,8 @@ declare interface app {
 
         /** @description A Doc object to use as the parent for this dialog box. The default parent is the Acrobat 
          * application. */
-        parentDoc?: Doc
-    }): string
+        parentDoc?: Doc;
+    }): string;
 
 
     /**
@@ -708,7 +713,7 @@ declare interface app {
         cMenuItem: string,
         /** @description oDoc is the Doc object of a document that is not hidden (see the Doc object hidden property).
          * If this parameter is present, execMenuItem executes the menu item in the document’s context. */
-        oDoc?: Doc
+        oDoc?: Doc;
     }): void,
 
     /**
@@ -936,7 +941,7 @@ declare interface app {
          *   * update 
          *
          *   The default is root. */
-        cFolder?: string
+        cFolder?: string;
     }): string,
 
     /** @description Goes to the previous view on the view stack, which is equivalent to clicking the Previous View
@@ -1007,7 +1012,7 @@ declare interface app {
         /** A string that specifies the URL to launch.*/
         cUrl: string,
         /** If true, this method launches the URL in a new window of the browser application. The default is false. */
-        bNewFrame?: boolean
+        bNewFrame?: boolean;
     }): void,
 
     /** @description Beginning with Acrobat 6.0, returns an array of TreeItem objects, which describes a menu hierarchy.
@@ -1052,5 +1057,59 @@ declare interface app {
      * **Note:** This method does not take single object argument with properties that contain the arguments as many JavaScript for Acrobat methods do. The argument of this method is a string.
      */
     loadPolicyFile(url: string): void,
+
+    mailGetAddrs(cTo?: string,
+        cCc?: string,
+        cBcc?: string,
+        cCaption?: string,
+        bCc?: boolean,
+        bBcc?: boolean):
+        void | [string, string, string];
+
+    mailMsg(bUI: boolean,
+        cTo: string,
+        cCc?: string,
+        cBcc?: string,
+        cSubject?: string,
+        cMsg?: string):
+        void;
+
+    newDoc(nWidth?: number,
+        nHeight?: number):
+        Doc;
+
+    newCollection(): Doc;
+
+    newFDF(): FDF;
+
+    openDoc(cPath: string,
+        oDoc?: Doc,
+        cFS?: string,
+        bHidden?: boolean,
+        bUseConv?: boolean,
+        cDest?: string): Doc | null;
+
+    openFDF(cDIPath: string): FDF;
+
+    popUpMenu(cItem?: string | []): string | null;
+
+    popUpMenuEx(...args: MenuItem[]): string | null;
+
+    removeToolButton(cName: string): void;
+
+    response(cQuestion: string,
+        cTitle?: string,
+        cDefault?: string,
+        bPassword?: boolean,
+        cLabel?: string):
+        string | null;
+
+    setInterval(cExpr: string, nMilliseconds: number): interval;
+
+    setTimeOut(cExpr: string, nMilliseconds: number): timeout;
+    
+    trustedFunction(oFunc: () => void): () => void;
+
+    trustPropagatorFunction(oFunc: () => void): () => void;
     //#endregion
 }
