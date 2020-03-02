@@ -1,3 +1,4 @@
+import { ReadStream } from "./ReadStream"
 interface annotAttachment {
     readonly contentStream: ReadStream,
     readonly creationDate: Date,

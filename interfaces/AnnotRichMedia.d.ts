@@ -14,6 +14,6 @@ interface AnnotRichMedia {
         arguments: []
     }): any;
 
-    callAS(methodName: string, ...arguments: any)
+    callAS(methodName: string, ...arguments: any): any;
     //#endregion
 }

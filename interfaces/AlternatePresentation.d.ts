@@ -9,6 +9,6 @@ interface AlternatePresentation {
         cCommand?: string;
     }): void;
     start(cOnStop?: string, cCommand?: string): void;
-    stop();
+    stop(): void;
     //#endregion
 }

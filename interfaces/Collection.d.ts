@@ -8,7 +8,8 @@ export interface Collection {
     //#region methods
     addField(name: string,
         text: string,
-        type?: string,
+        type?: "S" | "D" | "N" | "F" | "Desc" | "Size" | "ModDate" |
+            "CreationDate" | "CompressedSize", 
         order?: number,
         visible?: boolean,
         readOnly?: boolean):
