@@ -49,7 +49,7 @@ declare interface app {
      *       f.fillColor=color.gray;
      *    }
      */
-    readonly activeDocs: string[];
+    readonly activeDocs: Doc[];
 
     /**
      * @description If true (the default value), calculations can be performed. If false, calculations are not permitted.

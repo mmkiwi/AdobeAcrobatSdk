@@ -5,8 +5,10 @@ export interface collectionField {
     readOnly: boolean;
     sort: number;
     text: string;
-    type: string;
+    type: collectionFieldType;
     //#endregion
     //#region methods
     //#endregion
 }
+
+export type collectionFieldType = "S" | "D" | "N" | "F" | "Desc" | "Size" | "ModDate" | "CreationDate" | "CompressedSize";

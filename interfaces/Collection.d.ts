@@ -1,4 +1,4 @@
-import { collectionField } from "./collectionField";
+import { collectionField, collectionFieldType } from "./collectionField";
 export interface Collection {
     //#region properties
     readonly fields: Array<collectionField>;
@@ -8,8 +8,7 @@ export interface Collection {
     //#region methods
     addField(name: string,
         text: string,
-        type?: "S" | "D" | "N" | "F" | "Desc" | "Size" | "ModDate" |
-            "CreationDate" | "CompressedSize", 
+        type?: collectionFieldType, 
         order?: number,
         visible?: boolean,
         readOnly?: boolean):
