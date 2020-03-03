@@ -514,7 +514,7 @@ declare interface app {
         cFSInit?: string;
     }): {
         /** @description A string containing the resulting file system name for the chosen file. */
-        cFS: string,
+        cFS: "" | "CHTTP",
         /** @description A string containing the resulting path for the chosen file. */
         cPath: string,
         /** @description A string containing the resulting URL for the chosen file */

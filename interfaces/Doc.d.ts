@@ -91,7 +91,7 @@ export interface Doc {
     readonly URL: string;
     viewState: object;
     readonly xfa: XFAObject;
-    readonly XFAForeground:boolean;
+    readonly XFAForeground: boolean;
     zoom: number;
     zoomType: "NoVary" | "FitPage" | "FitWidth" | "FitHeight" | "FitVisibleWidth" | "Preferred" | "ReflowWidth"
 
@@ -99,6 +99,21 @@ export interface Doc {
     //#region methods
     importIcon(cName: string, cDIPath?: string, nPage?: number): void;
     getIcon(cIcon: string): Icon;
+    getPageNthWord(nPage?: number, nWord?: number, bStrip?: boolean): string;
+    getPageNumWords(nPage?: number): number;
     closeDoc(bNoSave?: boolean): void;
+    replacePages(nPage: number, cPath: string, nStart?: number, nEnd?: number): void;
+    saveAs(cPath: string,
+        cConvID?: string,
+        cFS?: "" | "CHTTP",
+        bCopy?: boolean,
+        bPromptToOverwrite?: boolean): void;
+    saveAs(params: {
+        cPath: string,
+        cConvID?: string,
+        cFS?: "" | "CHTTP",
+        bCopy?: boolean,
+        bPromptToOverwrite?: boolean
+    }): void;
     //#endregion
 }
